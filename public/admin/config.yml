@@ -1,0 +1,144 @@
+# Decap CMS configuration.
+# Docs: https://decapcms.org/docs/configuration-options/
+#
+# This defines what the client sees and can edit at /admin. Every
+# collection below points at one of the JSON files in src/content/ —
+# the same files src/data/*.js re-export for the React components.
+# Editing here changes the live site after the next deploy.
+
+backend:
+  name: git-gateway
+  branch: main # change to "master" if that's your repo's default branch
+
+# Uploaded images (book covers, resource thumbnails) are stored here
+# and referenced by the site as /uploads/<filename>.
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+site_url: https://cisanalogy.com
+display_url: https://cisanalogy.com
+
+collections:
+  - name: "site"
+    label: "Site Settings"
+    files:
+      - name: "settings"
+        label: "General Site Content"
+        file: "src/content/site.json"
+        fields:
+          - { label: "Brand name", name: "brand", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Contact email", name: "email", widget: "string" }
+          - label: "Social links"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "X (Twitter) URL", name: "x", widget: "string" }
+              - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
+          - { label: "Privacy notice URL", name: "privacyNoticeUrl", widget: "string" }
+          - { label: "Collaborate email subject", name: "collaborateSubject", widget: "string" }
+          - { label: "Contact email subject", name: "contactSubject", widget: "string" }
+          - label: "Home page (hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Small label above the title", name: "eyebrow", widget: "string" }
+              - { label: "Short explanation under the title", name: "subtitle", widget: "text" }
+          - label: "About the Book"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "First paragraph", name: "intro", widget: "text" }
+              - { label: "Second paragraph", name: "body", widget: "text" }
+              - { label: "Page count (e.g. 184 pages)", name: "pages", widget: "string" }
+              - { label: "Price (e.g. $19)", name: "price", widget: "string" }
+          - label: "Get Notified section"
+            name: "notify"
+            widget: "object"
+            fields:
+              - { label: "Small label above the title", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+
+  - name: "sales_channels"
+    label: "Sales Channels"
+    files:
+      - name: "channels"
+        label: "Where to Buy the Book"
+        file: "src/content/salesChannels.json"
+        fields:
+          - label: "Channels"
+            name: "channels"
+            widget: "list"
+            summary: "{{name}} — {{fields.active}}"
+            fields:
+              - { label: "Internal ID (short, no spaces, e.g. selar)", name: "id", widget: "string" }
+              - { label: "Platform name (shown on the button)", name: "name", widget: "string" }
+              - { label: "Link", name: "url", widget: "string" }
+              - { label: "Active (shown on the site)", name: "active", widget: "boolean", default: true }
+
+  - name: "series"
+    label: "The Series"
+    files:
+      - name: "books"
+        label: "CISA Domain Books"
+        file: "src/content/series.json"
+        fields:
+          - label: "Books"
+            name: "books"
+            widget: "list"
+            summary: "Domain {{fields.domain}} — {{fields.status}}"
+            fields:
+              - { label: "Domain number (1-5)", name: "domain", widget: "number", value_type: "int" }
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "Available now", value: "available" }
+                  - { label: "Coming soon", value: "coming-soon" }
+              - { label: "Cover image", name: "cover", widget: "image", required: false }
+              - label: "Custom buy links (leave empty to use the main Sales Channels list)"
+                name: "buyLinks"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Internal ID", name: "id", widget: "string" }
+                  - { label: "Platform name", name: "name", widget: "string" }
+                  - { label: "Link", name: "url", widget: "string" }
+                  - { label: "Active", name: "active", widget: "boolean", default: true }
+
+  - name: "testimonials"
+    label: "What People Say"
+    files:
+      - name: "items"
+        label: "Endorsements"
+        file: "src/content/testimonials.json"
+        fields:
+          - label: "Testimonials"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Title or credential", name: "title", widget: "string", required: false }
+              - { label: "Website/profile link", name: "url", widget: "string", required: false }
+
+  - name: "resources"
+    label: "Recommended Resources"
+    files:
+      - name: "items"
+        label: "Resources"
+        file: "src/content/resources.json"
+        fields:
+          - label: "Resources"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Cover/thumbnail image", name: "thumbnail", widget: "image", required: false }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Author/provider", name: "provider", widget: "string" }
+              - { label: "Why you recommend it", name: "blurb", widget: "text" }
+              - { label: "External link", name: "url", widget: "string" }
+              - { label: "Disclosure (affiliate/commercial/collaborative — optional)", name: "disclosure", widget: "string", required: false }

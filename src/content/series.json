@@ -1,0 +1,9 @@
+{
+  "books": [
+    { "domain": 1, "title": "Domain 1: Information Systems Auditing Process", "status": "available", "cover": "/covers/domain-1.jpg", "buyLinks": [] },
+    { "domain": 2, "title": "Domain 2: Information Security Risk Management", "status": "coming-soon", "cover": null, "buyLinks": [] },
+    { "domain": 3, "title": "Domain 3: Information Security Program", "status": "coming-soon", "cover": null, "buyLinks": [] },
+    { "domain": 4, "title": "Domain 4: Incident Management", "status": "coming-soon", "cover": null, "buyLinks": [] },
+    { "domain": 5, "title": "Domain 5: Governance and Program Management", "status": "coming-soon", "cover": null, "buyLinks": [] }
+  ]
+}

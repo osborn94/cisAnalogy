@@ -1,0 +1,19 @@
+{
+
+  "channels": [
+    {
+      "id": "selar",
+      "name": "Selar",
+      "url": "https://selar.com/cisanalogy_d1",
+      "active": true
+    },
+    {
+      "id": "gumroad",
+      "name": "Gumroad",
+      "url": "https://cisanalogy.gumroad.com/l/AA",
+      "active": true
+    }
+ 
+]
+
+}

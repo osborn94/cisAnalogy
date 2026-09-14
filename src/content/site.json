@@ -1,0 +1,25 @@
+{
+  "brand": "CISAnalogy",
+  "tagline": "Every concept begins with a story.",
+  "email": "hello@cisanalogy.com",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/adeshola-a-a6678a184"
+  },
+  "privacyNoticeUrl": "/privacy",
+  "collaborateSubject": "Collaboration enquiry",
+  "contactSubject": "Hello from the CISAnalogy website",
+  "hero": {
+    "eyebrow": "A CISA exam prep series",
+    "subtitle": "CISAnalogy turns dense CISA concepts into stories and analogies you'll actually remember on exam day. Domain 1 is out now — four more domains are on the way."
+  },
+  "about": {
+    "intro": "CISAnalogy is built for CISA candidates who understand concepts better through story than through definition. Each chapter opens with a scenario — a bank vault, a border checkpoint, a badge system — and uses it to unpack a technical concept from the exam blueprint, so the idea has something to hang onto when you need to recall it under pressure.",
+    "body": "It's written for people studying for the CISA exam who find dense manuals hard to retain, and who want a second, more memorable pass through the material — not a replacement for the official review manual, but a companion to it.",
+    "pages": "184 pages",
+    "price": "$19"
+  },
+  "notify": {
+    "eyebrow": "Domain 2 is coming",
+    "title": "Leave your email and I'll let you know when it's available"
+  }
+}

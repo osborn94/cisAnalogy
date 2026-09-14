@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "title": "PI Sec Audit",
+      "provider": "PI Sec",
+      "thumbnail": "/resources/pi-sec-audit.jpg",
+      "blurb": "Independent cybersecurity leadership to help organizations manage risk, meet external requirements, and strengthen resilience.",
+      "url": "https://pisec.ca/courses?utm_source=cisanalogy&utm_medium=referral&utm_campaign=partner-promo",
+      "disclosure": null
+    },
+    
+    {
+      "title": "CISA Exam Question Database",
+      "provider": "ISACA",
+      "thumbnail": "/resources/cisa-qa.jpg",
+      "blurb": "Practice questions that mirror the real exam's phrasing and difficulty.",
+      "url": "https://www.isaca.org/",
+      "disclosure": null
+    }
+  ]
+
+}
