@@ -15,8 +15,8 @@ backend:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-site_url: https://cisanalogy.com
-display_url: https://cisanalogy.com
+site_url: https://cisanalogy.netlify.app
+display_url: https://cisanalogy.netlify.app
 
 collections:
   - name: "site"
