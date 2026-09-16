@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
     <title>CISAnalogy — Every concept begins with a story</title>
     <meta name="description" content="CISAnalogy teaches CISA exam concepts through story and analogy. Domain 1 is available now — four more domains are on the way." />
     <link rel="canonical" href="https://cisanalogy.com/" />
@@ -44,5 +46,17 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
