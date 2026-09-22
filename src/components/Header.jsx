@@ -22,10 +22,7 @@ export default function Header() {
     <header className="site-header">
       <div className="wrap">
         <div className="header-row">
-          {/* <a href="#home" className="brand-mark">{SITE.brand}</a> */}
-          <a href="#home" className="brand-mark">
-            <img src="/cisanalogy-image2.jpg" alt="CisAnalogy" className="cisanalogy-image" />
-          </a>
+          <a href="#home" className="brand-mark">{SITE.brand}</a>
           <button
             className="nav-toggle"
             aria-expanded={open}

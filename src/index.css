@@ -219,10 +219,6 @@ button { font-family: inherit; }
   object-fit: contain;
   display: block;
 }
-.cisanalogy-image {
-  width: 120px;
-  height: auto;
-}
 
 @keyframes settle { to { opacity: 1; transform: translateY(0); } }
 
