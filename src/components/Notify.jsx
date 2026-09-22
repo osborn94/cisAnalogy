@@ -1,19 +1,15 @@
 import { useState } from "react";
+
 import { SITE } from "../data/config";
 import { trackEvent } from "../lib/analytics";
 
-/**
- * MAILING LIST — placeholder until the account is connected.
- * ------------------------------------------------------------
- * Set NOTIFY_ENDPOINT once the mailing-list provider is ready (e.g. a
- * Mailchimp/ConvertKit form action URL). Until then, submissions are
- * validated in the browser and shown a success message, but nothing
- * is actually sent anywhere — swap the body of handleSubmit's try
- * block for a real fetch() call once you have the endpoint, and make
- * sure the provider's confirmation emails include an unsubscribe link
- * (most providers add this automatically).
- */
-const NOTIFY_ENDPOINT = null;
+const ZOHO_ACTION = "https://zcv2-zcmp.maillist-manage.eu/weboptin.zc";
+
+const ZOHO_ZX = "14af21ab2e";
+const ZOHO_ZCLD = "1417d3a38c1f4b81";
+const ZOHO_ZCTD = "1417d3a38c1f0921";
+const ZOHO_FORM_IX = "3z0c1ead44210b301bf99ce57f1dde84b3d3e93fa4aa502028b0a78de5555bec0c";
+
 
 export default function Notify({
   releaseName = "Domain 2",
@@ -22,55 +18,93 @@ export default function Notify({
 }) {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
-  const [status, setStatus] = useState("idle"); // idle | loading | ok | err
+  const [status, setStatus] = useState("idle");
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    if (!email.trim() || !consent) return;
 
-    setStatus("loading");
+    const cleanEmail = email.trim();
 
-    if (!NOTIFY_ENDPOINT) {
-      // Placeholder path — no provider connected yet.
-      setTimeout(() => {
-        setStatus("ok");
-        setEmail("");
-        setConsent(false);
-        trackEvent("mailing_list_signup", { 
-          list: `${releaseName.toLowerCase().replace(/\s+/g, "-")}-notify`, 
-        });
-      }, 400);
+    if (!cleanEmail || !consent) {
       return;
     }
 
-    try {
-      const res = await fetch(NOTIFY_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+    setStatus("loading");
+
+    /*
+     * Create the actual Zoho Campaigns form.
+     *
+     * We are NOT clicking Zoho's JavaScript button.
+     * We are submitting the same POST fields that
+     * Zoho generated in the working form.
+     */
+    const form = document.createElement("form");
+
+    form.method = "POST";
+    form.action = ZOHO_ACTION;
+    form.target = "zohoSignupResponse";
+    form.style.display = "none";
+
+    const fields = {
+      CONTACT_EMAIL: cleanEmail,
+      submitType: "optinCustomView",
+      emailReportId: "",
+      formType: "QuickForm",
+      zx: ZOHO_ZX,
+      zcvers: "2.0",
+      oldListIds: "",
+      mode: "OptinCreateView",
+      zcld: ZOHO_ZCLD,
+      zctd: ZOHO_ZCTD,
+      zc_trackCode: "ZCFORMVIEW",
+      zc_formIx: ZOHO_FORM_IX,
+    };
+
+    Object.entries(fields).forEach(([name, value]) => {
+      const input = document.createElement("input");
+
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    form.submit();
+
+    /*
+     * Give Zoho time to process the request.
+     *
+     * The response is loaded into the hidden iframe,
+     * so the CISAnalogy page itself does not redirect.
+     */
+    setTimeout(() => {
+      setStatus("ok");
+      setEmail("");
+      setConsent(false);
+
+      trackEvent("mailing_list_signup", {
+        list: `${releaseName.toLowerCase().replace(/\s+/g, "-")}-notify`,
       });
-      if (res.ok) {
-        setStatus("ok");
-        setEmail("");
-        setConsent(false);
-        trackEvent("mailing_list_signup", { 
-          list: `${releaseName.toLowerCase().replace(/\s+/g, "-")}-notify`,
-        });
-      } else {
-        setStatus("err");
-      }
-    } catch {
-      setStatus("err");
-    }
+
+      form.remove();
+    }, 2000);
   }
 
   return (
     <section id="notify" className="notify">
       <div className="wrap">
         <p className="eyebrow">{eyebrow}</p>
+
         <h2 className="section-title">{title}</h2>
 
-        <form className="notify-form" onSubmit={handleSubmit} noValidate>
+        <form
+          className="notify-form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <input
             type="email"
             required
@@ -79,6 +113,7 @@ export default function Notify({
             onChange={(e) => setEmail(e.target.value)}
             disabled={status === "loading"}
             aria-label="Email address"
+            autoComplete="email"
           />
 
           <label className="consent-row">
@@ -87,37 +122,58 @@ export default function Notify({
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
               required
+              disabled={status === "loading"}
             />
+
             <span>
-              I agree to receive emails about future CISAnalogy releases. Read
-              the <a href={SITE.privacyNoticeUrl}>privacy notice</a>. You can
-              unsubscribe at any time.
+              I agree to receive emails about future CISAnalogy releases.
+              Read the{" "}
+              <a href={SITE.privacyNoticeUrl}>
+                privacy notice
+              </a>
+              . You can unsubscribe at any time.
             </span>
           </label>
 
           <div>
-            <button className="btn btn-primary" type="submit" disabled={status === "loading" || !consent}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={status === "loading" || !consent}
+            >
               {status === "loading" ? "Subscribing…" : "Subscribe"}
             </button>
           </div>
         </form>
 
+        {/* Zoho receives its response here instead of redirecting the page */}
+        <iframe
+          name="zohoSignupResponse"
+          title="Zoho signup response"
+          aria-hidden="true"
+          tabIndex="-1"
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            border: "0",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+        />
+
         {status === "ok" && (
           <p className="notify-status ok" role="status">
-            You're on the list — I'll email you when Domain 2 is out.
+            Thanks for subscribing. Please check your email to confirm your
+            subscription.
           </p>
         )}
+
         {status === "err" && (
           <p className="notify-status" role="status">
             Something went wrong. Please try again shortly.
           </p>
         )}
-
-        {/* <p className="notify-placeholder-note">
-          Mailing-list provider not yet connected — this form currently shows
-          a success message locally. Wire up NOTIFY_ENDPOINT in
-          src/components/Notify.jsx once the account is ready.
-        </p> */}
       </div>
     </section>
   );
