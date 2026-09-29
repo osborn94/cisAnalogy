@@ -18,10 +18,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-cover" aria-hidden="true">
+        {SITE.hero.coverImage && (
+          <div className="hero-cover" aria-hidden="true">
+            <img src={SITE.hero.coverImage} alt="" />
+          </div>
+        )}
+
+        {/* <div className="hero-cover" aria-hidden="true">
           
           <img src="/cisImage2.jpg" alt="" />
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import { SITE } from "../data/config";
 
 const NAV_ITEMS = [
   { href: "#about", label: "About the Book" },
+  { href: "#author", label: "About the Author" },
   { href: "#series", label: "The Series" },
   { href: "#notify", label: "Get Notified" },
   { href: "#testimonials", label: "What People Say" },

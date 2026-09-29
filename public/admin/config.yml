@@ -44,6 +44,7 @@ collections:
             fields:
               - { label: "Small label above the title", name: "eyebrow", widget: "string" }
               - { label: "Short explanation under the title", name: "subtitle", widget: "text" }
+              - { label: "Book cover image", name: "coverImage", widget: "image", required: false }
           - label: "About the Book"
             name: "about"
             widget: "object"
@@ -52,6 +53,13 @@ collections:
               - { label: "Second paragraph", name: "body", widget: "text" }
               - { label: "Page count (e.g. 184 pages)", name: "pages", widget: "string" }
               - { label: "Price (e.g. $19)", name: "price", widget: "string" }
+          - label: "About the Author"
+            name: "author"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Bio", name: "bio", widget: "text" }
+              - { label: "Photo", name: "photo", widget: "image", required: false }    
           - label: "Get Notified section"
             name: "notify"
             widget: "object"

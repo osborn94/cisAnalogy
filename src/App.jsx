@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import AboutAuthor from "./components/AboutAuthor";
 import Series from "./components/Series";
 import Notify from "./components/Notify";
 import Testimonials from "./components/Testimonials";
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <Hero />
       <About />
+      <AboutAuthor />
       <Series />
       <Notify />
       <Testimonials />
