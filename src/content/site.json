@@ -5,6 +5,11 @@
     "title": "Leave your email and I'll let you know when it's available"
   },
   "collaborateSubject": "Collaboration enquiry",
+  "author": {
+    "name": "Adeshola A.",
+    "bio": "Adeshola is a CISA-certified auditor and the creator of CISAnalogy, a series built on the idea that concepts stick better as stories than as definitions. When not writing, he trains audit teams and speaks on making technical material actually memorable.",
+    "photo": "/uploads/adeshola-a..jpg"
+  },
   "contactSubject": "Hello from the CISAnalogy website",
   "social": {
     "linkedin": "https://www.linkedin.com/in/adeshola-a-a6678a184",
@@ -19,14 +24,14 @@
   "author": {
     "name": "Adeshola A.",
     "bio": "Adeshola is a CISA-certified auditor and the creator of CISAnalogy, a series built on the idea that concepts stick better as stories than as definitions. When not writing, he trains audit teams and speaks on making technical material actually memorable.",
-    "photo": "/adeshola.jpg"
+    "photo": null
   },
   "tagline": "Every concept begins with a story.",
   "privacyNoticeUrl": "/privacy",
   "hero": {
     "eyebrow": "A CISA exam prep series",
     "subtitle": "CISAnalogy turns dense CISA concepts into stories and analogies you'll actually remember on exam day. Domain 1 is out now — four more domains are on the way.",
-    "coverImage": "/cisImage2.jpg"
+    "coverImage": "/uploads/cisimage2.jpg"
   },
   "email": "hello@cisanalogy.com"
 }
